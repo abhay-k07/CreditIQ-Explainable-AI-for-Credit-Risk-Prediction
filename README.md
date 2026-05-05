@@ -7,7 +7,7 @@ sdk: docker
 pinned: false
 app_port: 7860
 ---
-# CreditIQ - Explainable Credit Risk Prediction
+# Explainable Credit Risk Prediction
 
 This project is a credit risk prediction application that explains its decisions. It uses an XGBoost model to predict whether a loan applicant is a high, medium, or low risk, and then uses SHAP to show exactly which financial factors pushed the score up or down.
 
