@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_URL || `http://${window.location.hostname}:8000/`;
+// HARDCODE THIS for a moment to confirm the connection works
+const API_BASE = 'https://abhay-k07-creditiq.hf.space';
 
 const api = axios.create({
   baseURL: API_BASE,
