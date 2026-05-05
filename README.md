@@ -1,3 +1,12 @@
+---
+title: CreditIQ Explainable AI
+emoji: 📊
+colorFrom: blue
+colorTo: indigo
+sdk: docker
+pinned: false
+app_port: 7860
+---
 # Explainable Credit Risk Prediction
 
 This project is a credit risk prediction application that explains its decisions. It uses an XGBoost model to predict whether a loan applicant is a high, medium, or low risk, and then uses SHAP to show exactly which financial factors pushed the score up or down.
