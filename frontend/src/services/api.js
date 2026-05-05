@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// FORCE the HTTPS Hugging Face URL here
+// HARDCODE THIS for a moment to confirm the connection works
 const API_BASE = 'https://abhay-k07-creditiq.hf.space';
 
 const api = axios.create({
@@ -8,6 +8,8 @@ const api = axios.create({
   timeout: 30000,
   headers: { 'Content-Type': 'application/json' },
 });
+
+// ... (keep all your export functions as they are)
 
 // The rest of your code remains exactly the same...
 
