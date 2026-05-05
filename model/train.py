@@ -19,7 +19,10 @@ from feature_engineering import create_features
 
 # load & preprocess
 print("Loading data...")
-df = load_data("data/Credit Risk Benchmark Dataset.csv")
+base_path = os.path.dirname(os.path.abspath(__file__))
+data_path = os.path.join(base_path, "..", "data", "Credit Risk Benchmark Dataset.csv")
+
+df = load_data(data_path)
 df = clean_data(df)
 
 X, y = split_data(df)
