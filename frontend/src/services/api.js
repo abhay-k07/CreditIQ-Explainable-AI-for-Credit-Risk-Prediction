@@ -1,12 +1,16 @@
 import axios from 'axios';
 
-const API_BASE = '/api';
+// 1. Point this to your actual Hugging Face Space URL
+// Use an environment variable for production, and fallback to HF for local dev
+const API_BASE = import.meta.env.VITE_API_URL || 'https://abhay-k07-creditiq.hf.space';
 
 const api = axios.create({
   baseURL: API_BASE,
   timeout: 30000,
   headers: { 'Content-Type': 'application/json' },
 });
+
+// The rest of your code remains exactly the same...
 
 /**
  * Single credit risk prediction.
