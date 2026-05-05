@@ -19,7 +19,7 @@ from feature_engineering import create_features
 
 # load & preprocess
 print("Loading data...")
-df = load_data("../data/Credit Risk Benchmark Dataset.csv")
+df = load_data("data/Credit Risk Benchmark Dataset.csv")
 df = clean_data(df)
 
 X, y = split_data(df)
