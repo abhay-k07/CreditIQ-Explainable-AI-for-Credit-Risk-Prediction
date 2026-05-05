@@ -1,0 +1,39 @@
+{
+  "groups": [
+    {
+      "group": "18-30",
+      "count": 308,
+      "accuracy": 0.737,
+      "prediction_rate": 0.7597,
+      "actual_default_rate": 0.6591,
+      "avg_probability": 0.6662
+    },
+    {
+      "group": "31-45",
+      "count": 1130,
+      "accuracy": 0.754,
+      "prediction_rate": 0.6796,
+      "actual_default_rate": 0.5717,
+      "avg_probability": 0.5944
+    },
+    {
+      "group": "46-60",
+      "count": 1210,
+      "accuracy": 0.7702,
+      "prediction_rate": 0.5579,
+      "actual_default_rate": 0.5066,
+      "avg_probability": 0.5156
+    },
+    {
+      "group": "61+",
+      "count": 653,
+      "accuracy": 0.8208,
+      "prediction_rate": 0.3032,
+      "actual_default_rate": 0.2956,
+      "avg_probability": 0.3208
+    }
+  ],
+  "disparate_impact_ratio": 0.3991,
+  "threshold_used": 0.4,
+  "interpretation": "A disparate impact ratio below 0.8 may indicate potential bias."
+}

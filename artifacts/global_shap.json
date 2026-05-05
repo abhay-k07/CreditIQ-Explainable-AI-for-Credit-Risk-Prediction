@@ -1,0 +1,82 @@
+{
+  "feature_importance": [
+    {
+      "feature": "delinq_score",
+      "importance": 0.904353
+    },
+    {
+      "feature": "rev_util",
+      "importance": 0.64464
+    },
+    {
+      "feature": "debt_ratio",
+      "importance": 0.159266
+    },
+    {
+      "feature": "credit_per_age",
+      "importance": 0.154288
+    },
+    {
+      "feature": "late_30_59",
+      "importance": 0.13457
+    },
+    {
+      "feature": "age",
+      "importance": 0.130694
+    },
+    {
+      "feature": "income_to_debt",
+      "importance": 0.119262
+    },
+    {
+      "feature": "real_estate",
+      "importance": 0.090627
+    },
+    {
+      "feature": "open_credit",
+      "importance": 0.082602
+    },
+    {
+      "feature": "monthly_inc",
+      "importance": 0.08245
+    },
+    {
+      "feature": "late_90",
+      "importance": 0.057175
+    },
+    {
+      "feature": "late_60_89",
+      "importance": 0.055661
+    },
+    {
+      "feature": "dependents",
+      "importance": 0.052811
+    },
+    {
+      "feature": "high_util",
+      "importance": 0.040786
+    },
+    {
+      "feature": "log_income",
+      "importance": 0.015304
+    }
+  ],
+  "sample_size": 500,
+  "features": [
+    "rev_util",
+    "age",
+    "late_30_59",
+    "debt_ratio",
+    "monthly_inc",
+    "open_credit",
+    "late_90",
+    "real_estate",
+    "late_60_89",
+    "dependents",
+    "log_income",
+    "income_to_debt",
+    "credit_per_age",
+    "delinq_score",
+    "high_util"
+  ]
+}
