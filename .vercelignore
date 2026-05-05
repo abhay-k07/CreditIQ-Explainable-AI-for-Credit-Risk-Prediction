@@ -1,0 +1,8 @@
+api/
+backend/
+artifacts/
+model/
+data/
+requirements.txt
+Dockerfile
+.python-version
