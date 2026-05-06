@@ -18,9 +18,12 @@ jobs:
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          # Remove screenshots and other binary files not needed for the Space to stay under HF limits
+          # Remove screenshots and other binary files not needed for the Space
           rm -rf screenshots/
           rm -f image.png
+          # Create an orphan branch to start a fresh history without binary traces
+          git checkout --orphan hf-sync
           git add .
-          git commit -m "Remove screenshots for Hugging Face Space" || echo "No changes to commit"
-          git push --force https://abhay-k07:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/abhay-k07/CreditIQ main
+          git commit -m "Fresh sync to Hugging Face Space"
+          # Push the clean orphan branch to the HF main branch
+          git push --force https://abhay-k07:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/abhay-k07/CreditIQ hf-sync:main
