@@ -7,88 +7,129 @@ sdk: docker
 pinned: false
 app_port: 7860
 ---
-# Explainable Credit Risk Prediction
+# CreditIQ — Explainable Credit Risk Prediction
 
-This project is a credit risk prediction application that explains its decisions. It uses an XGBoost model to predict whether a loan applicant is a high, medium, or low risk, and then uses SHAP to show exactly which financial factors pushed the score up or down.
+A full stack AI project that predicts loan applicant risk and actually explains why. Built on XGBoost with SHAP for feature attribution, so you can see which financial factors pushed a score up or down — not just the number.
 
-The backend is built with FastAPI and the frontend is a React application that visualizes the risk score and feature impacts. It also includes a fairness analysis module that checks the prediction rates across different age groups.
+We built this for our B.Tech research project (BTP2CSE179). The core problem was straightforward: credit scoring models are black boxes, and that's a real issue when someone's loan gets denied. We wanted a system that gives a prediction *and* a human-readable reason for it, with a fairness check on top.
 
-## Features
+## Screenshots
 
-- **XGBoost Classifier:** The core model used for predicting risk.
-- **SHAP Integration:** Shows the impact of each feature on the final prediction using a TreeExplainer.
-- **Fairness Analysis:** Checks the disparate impact ratio across different age demographics.
-- **Interactive Dashboard:** A React frontend that allows you to input applicant data and see the real-time prediction and explanation.
-- **What-If Simulation:** Sliders on the frontend let you tweak input values to see how they change the predicted risk score.
-- **API Endpoints:** A FastAPI backend that handles validation and prediction requests.
+The dashboard runs locally on `localhost:3000`. Here is what each page looks like:
 
-## Tech Stack
+### Landing Page
+
+The main entry point. Input the applicant's financial profile and get an instant risk prediction with a visual gauge.
+
+![Landing page](screenshots/landing-page.png)
+
+### Key Factors (SHAP Explanation)
+
+The SHAP waterfall chart shows exactly which features pushed the risk score up or down for that specific prediction. No black box.
+
+![Key factors page](screenshots/key-factors.png)
+
+### Recommendations
+
+Based on the risk factors, the app suggests what the applicant could change to improve their score.
+
+![Recommendations page](screenshots/recommendations.png)
+
+### Model Performance
+
+ROC curves, confusion matrix, and cross-validation results. All the metrics in one place.
+
+![Model performance page](screenshots/model-performance.png)
+
+### Prediction History
+
+Every prediction made in the session, stored locally so you can compare applicants side by side.
+
+![Prediction history page](screenshots/prediction-history.png)
+
+### Fairness & Bias Analysis
+
+Checks the disparate impact ratio across age demographics to flag whether the model treats groups differently.
+
+![Fairness and bias analysis page](screenshots/fairness-&-bias-analysis.png)
+
+## What it does
+
+The model takes standard loan application data (income, debt, credit history, employment length, etc.) and outputs a three-tier risk classification: low, medium, or high. That part is fairly routine. The interesting piece is everything after the prediction:
+
+- SHAP values show the exact contribution of each feature to that specific score
+- A what-if slider panel lets you tweak inputs and watch the risk change in real time
+- The fairness module runs a disparate impact check across age groups to catch demographic bias
+- Prediction history lets you compare multiple applicants in a session
+
+The backend validates inputs through Pydantic, runs a preprocessing pipeline with log transforms and derived ratios, then passes the cleaned data to the XGBoost model and SHAP TreeExplainer together.
+
+## Model performance
+
+Evaluated with 5-fold stratified cross-validation:
+
+| Metric | Score |
+|--------|-------|
+| Accuracy | 0.7716 |
+| Precision | 0.7403 |
+| Recall | 0.8387 |
+| F1 Score | 0.7864 |
+| ROC-AUC | 0.8530 |
+
+Recall is higher than precision by design — in credit risk, missing a high-risk applicant (false negative) costs more than a false positive.
+
+## Tech stack
 
 - **Backend:** Python, FastAPI, Pydantic, XGBoost, SHAP, Scikit-learn
 - **Frontend:** React 19, React Router, Tailwind CSS, Recharts
 - **Deployment:** Docker, Docker Compose
 
-## Model Performance
+## Running it locally
 
-The model was evaluated using 5-fold stratified cross-validation. 
+You need Python 3.10+ and Node.js 18+.
 
-- **Accuracy:** 0.7716
-- **Precision:** 0.7403
-- **Recall:** 0.8387
-- **F1 Score:** 0.7864
-- **ROC-AUC:** 0.8530
-
-## How It Works
-
-1. The frontend collects financial data (income, debt, credit history, etc.) and sends it to the FastAPI backend.
-2. The backend uses Pydantic to validate the input ranges.
-3. The data is passed through a preprocessing pipeline that applies log transformations and calculates derived ratios.
-4. The XGBoost model generates a risk probability.
-5. SHAP calculates the exact feature contributions for that specific prediction.
-6. The backend returns the probability and the SHAP values to the frontend.
-7. The React dashboard visualizes the prediction using a risk gauge and a feature impact chart.
-
-## Project Structure
-
-- `model/`: The machine learning pipeline, including data preprocessing, feature engineering, and training scripts.
-- `backend/`: The FastAPI application that serves the predictions.
-- `frontend/`: The React dashboard.
-- `artifacts/`: Saved model weights, the SHAP explainer, and evaluation metrics.
-- `data/`: The credit risk benchmark dataset used for training.
-
-## Run Locally
-
-### Backend
-
+**Backend:**
 ```bash
 cd backend
 pip install -r ../requirements.txt
 python -m uvicorn app:app --reload
 ```
+The API starts on `http://localhost:8000`.
 
-### Frontend
-
+**Frontend:**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+The dashboard opens at `http://localhost:3000`.
 
-### Docker
-
-You can also run both the frontend and backend using Docker Compose:
-
+**Docker (both at once):**
 ```bash
 docker compose up --build
 ```
 
-The frontend will be available at `http://localhost:3000` and the API at `http://localhost:8000`.
+## API endpoints
 
-## API Endpoints
+- `GET /health` — API status and model version
+- `POST /predict` — Takes an applicant profile, returns risk classification and SHAP values
+- `GET /metrics` — ROC curve, confusion matrix, and cross-validation results
+- `GET /global-shap` — Feature importance across the full test set
+- `GET /fairness` — Age-based disparate impact analysis
+- `POST /predict/batch` — Batch predictions from a CSV upload
 
-- `GET /health`: Returns the API status and model version.
-- `POST /predict`: Takes an applicant profile and returns the risk prediction and SHAP explanation.
-- `GET /metrics`: Returns the model evaluation metrics (ROC, confusion matrix, cross-validation results).
-- `GET /global-shap`: Returns the overall feature importance calculated across the test set.
-- `GET /fairness`: Returns the age-based fairness analysis results.
-- `POST /predict/batch`: Processes a batch of predictions from an uploaded CSV file.
+## Project structure
+
+```
+.
+├── backend/
+│   └── app.py                 # FastAPI server
+├── frontend/
+│   ├── src/                   # React components and pages
+│   └── public/                # Static assets
+├── model/                     # Preprocessing pipeline and training scripts
+├── artifacts/                 # Saved model, SHAP explainer, evaluation metrics
+├── data/                      # Credit risk benchmark dataset
+└── screenshots/               # Dashboard screenshots
+```
+B.Tech Computer Science and Engineering, 4th Semester, 2025–2026
