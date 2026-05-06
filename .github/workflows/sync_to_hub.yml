@@ -15,4 +15,12 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://abhay-k07:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/abhay-k07/CreditIQ main
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          # Remove screenshots and other binary files not needed for the Space to stay under HF limits
+          rm -rf screenshots/
+          rm -f image.png
+          git add .
+          git commit -m "Remove screenshots for Hugging Face Space" || echo "No changes to commit"
+          git push --force https://abhay-k07:${{ secrets.HF_TOKEN }}@huggingface.co/spaces/abhay-k07/CreditIQ main
